@@ -1,0 +1,54 @@
+# SlackAPI credientals
+slackcred:
+  legacy_token:
+  bot_homechannel:
+
+# eBayAPI credientals
+storeName:
+api.ebay.com:
+  appid:
+  certid:
+  compatability:
+  devid:
+  iaf_token:
+api.sandbox.ebay.com:
+  appid:
+  certid:
+  compatability:
+  devid:
+  token:
+name:
+open.api.ebay.com:
+  appid:
+svcs.ebay.com:
+  appid:
+  version:
+version:
+oauth2:
+  unser_rf_token:
+  payload:
+  headers:
+    content-type:
+    authorization:
+
+# userconfig throuh Slack chat
+userconfigs:
+  quickrun:
+    sublist:
+    - ''
+  sublist:
+  whitelist:
+
+# Program texts
+helpmessage: >
+  You are welcome, you succesfully talked to Goofy for the first time :).
+  \n\n*goofy run* -> you are manually running the goofy programm, try it out now ;)
+  \n*goofy subword [yourword]* -> ads a word which will be searched against all ebay listingsbyseller
+  \n*goofy unsubword [yourword]* -> removes a word <-> subword
+  \n*goofy getsublist* -> returns a list of words you subbed to
+  \n\nAusnahmen werden mit den *whitelist* Kommentaren erstellt
+  \n*goofy addwhitelist [yourstring]* -> do goofy run and copy paste the context
+  \n*goofy remwhitelist [yourstring]* -> do goofy run and copy paste the context
+  \n*goofy getwhitelist* -> returns a all strings you whitelisted
+  \n\n*goofy quickrun [yourword]* -> easy quickrun filters for only one word
+  \n\n*goofy delete* -> deletes all messages from this channel

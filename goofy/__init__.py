@@ -1,0 +1,2 @@
+datafolder = ''
+configfolder = ''

@@ -1,0 +1,8 @@
+ruamel.yaml
+pytest
+pandas
+ebaysdk
+slackclient
+lxml
+luigi
+requests
