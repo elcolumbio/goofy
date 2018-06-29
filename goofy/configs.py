@@ -3,7 +3,7 @@
 Mainly we set up the file environment.
 
 We use two config files.
-One were we put all credientals and userconfigs, thats confdata.
+One were we put all credientals and userconfigs, thats configdata.
 One were we track the last runtime of varios tasks, the path is taskinfo.
 Since we overwrite the values, we have to care for the most recent data.
 """
@@ -23,7 +23,7 @@ if path_to_config is None:
     raise ValueError('path_to_config canot be empty')
 
 
-confdata = yamlhandler.read(path_to_config)
+configdata = yamlhandler.read(path_to_config)
 taskinfo = f'{datafolder}/yaml/taskinfo.yaml'
 
 
@@ -53,13 +53,12 @@ def getlastruntime(key):
         return dt.datetime.strptime(x, "%Y-%m-%dT%H:%M:%S.%fZ")
 
 
+# Some easy access attributes, maybe we drop them all.
+# Because some are changing.
 # eBayAPI oauth2 credientals
-unser_rf_token = confdata['oauth2']['unser_rf_token']
-payload = confdata['oauth2']['payload']
-headers = confdata['oauth2']['headers']
+unser_rf_token = configdata['oauth2']['unser_rf_token']
+payload = configdata['oauth2']['payload']
+headers = configdata['oauth2']['headers']
 
 # SlackAPI credientals
-slackcred = confdata['slackcred']
-
-# Settings from the user
-userconfigs = confdata['userconfigs']
+slackcred = configdata['slackcred']

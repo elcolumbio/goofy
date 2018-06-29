@@ -12,6 +12,7 @@ from . import yamlhandler
 
 class CleanData(luigi.Task):
     """We iterate over each file in a folder and parse and extract data."""
+
     folder = f'{configs.datafolder}ebayapi/getitem/'
 
     def extractdata(self, file):

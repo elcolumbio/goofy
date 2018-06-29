@@ -13,7 +13,8 @@ class GetListingsBySeller(ApiCallTemplate):
     unnest_data = ['searchResult', 'item']
     foldername = 'listingsbyseller/'
     apiname = 'finding'
-    api_query = ('findItemsIneBayStores', {'storeName': configs.storeName})
+    api_query = ('findItemsIneBayStores', {'storeName': configs.configdata[
+        'storeName']})
 
 
 class GetSellerEvents(ApiCallTemplate):
@@ -33,10 +34,6 @@ class GetSellerEvents(ApiCallTemplate):
     unnest_data = ['ItemArray', 'Item']
     apiname = 'trading'
     api_query = ('GetSellerEvents', {'ModTimeFrom': starttime})
-
-    def output(self):
-        return luigi.LocalTarget(f'{configs.datafolder}\
-            ebayapi/{self.foldername}{self.datetime}.yaml')
 
 
 class GetItem(ApiCallTemplate):
@@ -60,12 +57,11 @@ class AllListings(luigi.WrapperTask):
 
     def run(self):
         itemidlist = []
-        response = yamlhandler.read(open(self.input().path))
+        response = yamlhandler.read(self.input().path)
         for listing in response:
             itemidlist.append(listing[self.key])
         itemidlist = list(set(itemidlist))
         for item in itemidlist:
-            print(item)
             yield GetItem(item)
 
 

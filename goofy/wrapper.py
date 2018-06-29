@@ -39,7 +39,6 @@ class ApiCallTemplate(luigi.Task):
     removes metadata
     """
     unnest_data = []
-    onepage = False  # onepage has no meta data
 
     def output(self):
         today = dt.datetime.today().strftime('%Y-%m-%d')
@@ -52,9 +51,10 @@ class ApiCallTemplate(luigi.Task):
         def set_con(apiname):
             if self.apiname == 'finding':
                 api = ebaysdk.finding.Connection(
-                    siteid='EBAY-DE', config_file=configs.confdata)
+                    siteid='EBAY-DE', config_file=configs.path_to_config)
             elif self.apiname == 'trading':
-                api = ebaysdk.trading.Connection(config_file=configs.confdata)
+                api = ebaysdk.trading.Connection(
+                    config_file=configs.path_to_config)
             return api
 
         def unnest_dict(dataDict, mapList):
@@ -70,18 +70,17 @@ class ApiCallTemplate(luigi.Task):
             UpdateToken()
             api = set_con(self.apiname)
             response = api.execute(*self.api_query)
+        ebaytime = response.get('Timestamp', None)
 
         while True:
             try:
-                response = api.next_page()
-                response = response.dict()
-                ebaytime = response.get('Timestamp', None)
+                response = api.next_page().dict()
                 result = unnest_dict(response, self.unnest_data)
                 if isinstance(result, list):
                     resultlist += result
                 else:
                     resultlist.append(result)
-            except ebaysdk.exception.PaginationLimit:
+            except (ebaysdk.exception.PaginationLimit, AttributeError):
                 break
 
         yamlhandler.write(self.output().path, resultlist)

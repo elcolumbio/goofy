@@ -9,7 +9,7 @@ class SlackDelete():
     """Delete all messages in a channel."""
 
     def __init__(self, channel, latestday=dt.datetime.now()):
-        self.legacy_token = configs.confdata['slackcred']['legacy_token']
+        self.legacy_token = configs.configdata['slackcred']['legacy_token']
         self.channel = channel
         self.latestday = latestday
         self.main()

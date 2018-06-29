@@ -19,7 +19,7 @@ active_listing = f'{configs.datafolder}ebayapi/listingsbyseller'
 class EbayAlarm():
     def __init__(self, profile='standard'):
         self.profile = profile
-        self.userconfigs = configs.userconfigs
+        self.userconfigs = configs.configdata['userconfig']
 
     def run(self):
         def stripx(filename):
