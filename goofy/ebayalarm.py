@@ -19,7 +19,7 @@ active_listing = f'{configs.datafolder}ebayapi/listingsbyseller'
 class EbayAlarm():
     def __init__(self, profile='standard'):
         self.profile = profile
-        self.userconfigs = configs.configdata['userconfig']
+        self.userconfig = configs.configdata['userconfig']
 
     def run(self):
         def stripx(filename):
@@ -73,7 +73,7 @@ class EbayAlarm():
             return resultdict
 
         def whitelistcheck(trefferdict):
-            whitelist = self.configdict['whitelist']
+            whitelist = self.userconfig['whitelist']
             kontext = trefferdict['hit'].lower().strip()
             whitelisted = False
             for whitelisting in whitelist:
@@ -83,9 +83,9 @@ class EbayAlarm():
 
         def getitem_throwalert(file, cleaned, trefferliste, active_list):
             if self.profile == 'standard':
-                subwords = self.configdict['sublist']
+                subwords = self.userconfig['sublist']
             else:
-                subwords = self.configdict['quickrun']['sublist']
+                subwords = self.userconfig['quickrun']['sublist']
             prepattern = ''
             assert isinstance(subwords, list)
             if len(subwords) > 1:
@@ -114,13 +114,13 @@ class EbayAlarm():
                 trefferdict['ebaylink'] = ebaylink
                 trefferdict['title'] = title
 
-                cond1 = not whitelistcheck(trefferdict)
+                notwhitelisted = not whitelistcheck(trefferdict)
                 cond2 = self.profile == 'quickrun'
-                if cond1 or cond2:
+                if notwhitelisted or cond2:
                     trefferliste.append(trefferdict)
             return trefferliste
 
-        def main(self):
+        def main():
             recentfile = f'{active_listing}/{get_recent(active_listing)}'
             live_listings = list(set(active_itemid_list(recentfile)))
             freshfilesdict = get_freshest_data(getitemfolder)

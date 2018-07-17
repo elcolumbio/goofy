@@ -1,0 +1,6 @@
+
+\.pytest_cache/
+
+test/__pycache__/
+
+goofy/__pycache__/

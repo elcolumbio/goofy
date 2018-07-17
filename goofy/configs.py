@@ -3,7 +3,7 @@
 Mainly we set up the file environment.
 
 We use two config files.
-One were we put all credientals and userconfigs, thats configdata.
+One were we put all credientals and userconfig, thats configdata.
 One were we track the last runtime of varios tasks, the path is taskinfo.
 Since we overwrite the values, we have to care for the most recent data.
 """

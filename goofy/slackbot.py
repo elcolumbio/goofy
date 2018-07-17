@@ -46,58 +46,58 @@ class Brain():
         return printtoslack
 
     def subword(self):
-        sublist = self.configdata['userconfigs']['sublist']
+        sublist = self.configdata['userconfig']['sublist']
         if not isinstance(sublist, list):
             sublist = list()
         sublist.append(self.uservalues)
-        self.configdata['userconfigs']['sublist'] = sublist
-        configs.writoconfig(self.configdata)
+        self.configdata['userconfig']['sublist'] = sublist
+        configs.writetoconfig(self.configdata)
         return f'succesful added {self.uservalues} to your subs'
 
     def unsubword(self):
-        sublist = self.configdata['userconfigs']['sublist']
+        sublist = self.configdata['userconfig']['sublist']
         try:
             sublist.remove(self.uservalues)
             response = f'succesful removed {self.uservalues} from your subs'
         except ValueError:   # we handle None userinput and wrong userinput
             response = f'unsuccesful {self.uservalues} not exists in your subs'
-        self.configdata['userconfigs']['sublist'] = sublist
-        configs.writoconfig(self.configdata)
+        self.configdata['userconfig']['sublist'] = sublist
+        configs.writetoconfig(self.configdata)
         return response
 
     def addwhitelist(self):
-        whitelist = self.configdata['userconfigs']['whitelist']
+        whitelist = self.configdata['userconfig']['whitelist']
         if not isinstance(whitelist, list):
             whitelist = list()
         whitelist.append(self.uservalues)
-        self.configdata['userconfigs']['whitelist'] = whitelist
-        configs.writoconfig(self.configdata)
+        self.configdata['userconfig']['whitelist'] = whitelist
+        configs.writetoconfig(self.configdata)
         return f'succesful added {self.uservalues} to your whitelist'
 
     def remwhitelist(self):
-        whitelist = self.configdata['userconfigs']['whitelist']
+        whitelist = self.configdata['userconfig']['whitelist']
         try:
             whitelist.remove(self.uservalues)
             response = f'succesful removed {self.uservalues} from whitelist'
         except ValueError:
             response = f'unsuccesful {self.uservalues} not exists in whitelist'
-        self.configdata['userconfigs']['whitelist'] = whitelist
-        configs.writoconfig(self.configdata)
+        self.configdata['userconfig']['whitelist'] = whitelist
+        configs.writetoconfig(self.configdata)
         return response
 
     def getsublist(self):
-        sublist = self.configdata['userconfigs']['sublist']
+        sublist = self.configdata['userconfig']['sublist']
         return f'{sublist}'
 
     def getwhitelist(self):
-        whitelist = self.configdata['userconfigs']['whitelist']
+        whitelist = self.configdata['userconfig']['whitelist']
         return f'{whitelist}'
 
     def quickrun(self):
         subwords = list()
         subwords.append(self.uservalues)
-        self.configdata['userconfigs']['quickrun']['sublist'] = subwords
-        configs.writoconfig(self.configdata)
+        self.configdata['userconfig']['quickrun']['sublist'] = subwords
+        configs.writetoconfig(self.configdata)
         result = EbayAlarm('quickrun').run()
         printtoslack = f'i found {len(result)} hits for word: \
         {self.uservalues}\n'
@@ -107,7 +107,7 @@ class Brain():
         return printtoslack
 
     def delete(self):
-        SlackDelete(0, self.channel)
+        SlackDelete(self.channel)
         spam = f'deleted all messages,and i make a new one like this :)'
         sc.rtm_send_message(self.channel, spam)
         time.sleep(1)
@@ -116,8 +116,6 @@ class Brain():
 
 
 class Listener():
-    def run():
-        Listener.listening()
 
     def check_userinput(nosecondargument, uservalues, pmessage):
         if uservalues == '' and not nosecondargument:
@@ -196,6 +194,5 @@ token = configs.readconfig()['slackcred']['bot_token']
 channel = configs.readconfig()['slackcred']['bot_homechannel']
 sc = SlackClient(token)
 
-
 if __name__ == '__main__':
-    Listener.run()
+    Listener.listening()

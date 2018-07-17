@@ -1,7 +1,7 @@
 import unittest
 import ast
 
-from . import slackbot
+from goofy import slackbot
 
 
 class TestSlackBot(unittest.TestCase):
